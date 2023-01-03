@@ -1,3 +1,4 @@
+drop table cccat9.stock_entry;
 drop table cccat9.zipcode;
 drop table cccat9.item;
 drop table cccat9.product;

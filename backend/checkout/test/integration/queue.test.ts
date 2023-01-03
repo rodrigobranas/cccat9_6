@@ -8,6 +8,7 @@ import sinon from "sinon";
 import QueueMemory from "../../src/infra/queue/QueueMemory";
 import FreightGatewayHttp from "../../src/infra/gateway/FreightGatewayHttp";
 import CatalogGatewayHttp from "../../src/infra/gateway/CatalogGatewayHttp";
+import StockGatewayHttp from "../../src/infra/gateway/StockGatewayHttp";
 
 test("Deve testar com a fila", async function () {
 	const queue = new QueueMemory();
@@ -17,7 +18,8 @@ test("Deve testar com a fila", async function () {
 	const orderData = new OrderDataDatabase(connection);
 	const freightGateway = new FreightGatewayHttp();
 	const catalogGateway = new CatalogGatewayHttp();
-	const checkout = new Checkout(catalogGateway, couponData, orderData, freightGateway);
+	const stockGateway = new StockGatewayHttp();
+	const checkout = new Checkout(catalogGateway, couponData, orderData, freightGateway, stockGateway);
 	const checkoutSpy = sinon.spy(checkout, "execute");
 	new QueueController(queue, checkout);
 	const input = {
@@ -31,7 +33,7 @@ test("Deve testar com a fila", async function () {
 	await queue.publish("checkout", input);
 	const [returnValue] = checkoutSpy.returnValues;
 	const output = await returnValue;
-	expect(output.code).toBe("202200000001");
+	expect(output.code).toBe("202300000001");
 	expect(output.total).toBe(6370);
 	checkoutSpy.restore();
 	await connection.close();

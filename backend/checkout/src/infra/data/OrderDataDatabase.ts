@@ -17,6 +17,10 @@ export default class OrderDataDatabase implements OrderData {
 		return orderData;
 	}
 
+	getAll(): Promise<Order[]> {
+		throw new Error("Method not implemented.");
+	}
+
 	async count(): Promise<number> {
 		const [options] = await this.connection.query("select count(*)::integer as count from cccat9.order", []);
 		return options.count;

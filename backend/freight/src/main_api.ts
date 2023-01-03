@@ -1,3 +1,4 @@
+import AuthorizationUseCase from "./application/AuthorizationUseCase";
 import CalculateFreight from "./application/CalculateFreight";
 import RestController from "./infra/controller/RestController";
 import ZipcodeDataDatabase from "./infra/data/ZipcodeDataDatabase";
@@ -7,6 +8,6 @@ import ExpressHttpServer from "./infra/http/ExpressHttpServer";
 const connection = new PgPromiseConnection();
 const httpServer = new ExpressHttpServer();
 const zipcodeData = new ZipcodeDataDatabase(connection);
-const calculateFreight = new CalculateFreight(zipcodeData);
+const calculateFreight = new AuthorizationUseCase(new CalculateFreight(zipcodeData));
 new RestController(httpServer, calculateFreight);
 httpServer.listen(3001);

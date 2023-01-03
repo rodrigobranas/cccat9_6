@@ -6,6 +6,7 @@ import ProductDataDatabase from "../../src/infra/data/ProductDataDatabase";
 import PgPromiseConnection from "../../src/infra/database/PgPromiseConnection";
 import FreightGatewayHttp from "../../src/infra/gateway/FreightGatewayHttp";
 import CatalogGatewayHttp from "../../src/infra/gateway/CatalogGatewayHttp";
+import StockGatewayHttp from "../../src/infra/gateway/StockGatewayHttp";
 
 test("Deve consultar um pedido", async function () {
 	const connection = new PgPromiseConnection();
@@ -14,7 +15,8 @@ test("Deve consultar um pedido", async function () {
 	const orderData = new OrderDataDatabase(connection);
 	const freightGateway = new FreightGatewayHttp();
 	const catalogGateway = new CatalogGatewayHttp();
-	const checkout = new Checkout(catalogGateway, couponData, orderData, freightGateway);
+	const stockGateway = new StockGatewayHttp();
+	const checkout = new Checkout(catalogGateway, couponData, orderData, freightGateway, stockGateway);
 	const input = {
 		cpf: "987.654.321-00",
 		items: [

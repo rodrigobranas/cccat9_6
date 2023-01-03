@@ -1,8 +1,9 @@
 import FreightCalculator from "../domain/entities/FreightCalculator";
 import ZipcodeData from "../domain/data/ZipcodeData";
 import DistanceCalculator from "../domain/entities/DistanceCalculator";
+import UseCase from "./UseCase";
 
-export default class CalculateFreight {
+export default class CalculateFreight implements UseCase {
 
 	constructor (readonly zipcodeData: ZipcodeData) {
 	}
